@@ -17,9 +17,9 @@ vault:
   server:
     ha:
       enabled: false
-      service:
-        type: LoadBalancer
-        port: 8200
+    service:
+      type: LoadBalancer
+      port: 8200
 
 nodeSelector: {}
 tolerations: []
