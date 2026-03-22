@@ -1,0 +1,8 @@
+apiVersion: v2
+name: hashicorp-vault
+version: 0.1.0
+description: Wrapper chart for deploying HashiCorp Vault using the official Helm chart
+home: https://github.com/hashicorp/vault-helm
+sources:
+	- https://github.com/hashicorp/vault-helm
+appVersion: "1.15.0"
