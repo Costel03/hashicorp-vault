@@ -21,8 +21,6 @@ vault:
         type: LoadBalancer
         port: 8200
 
-
-
 nodeSelector: {}
 tolerations: []
 affinity: {}
