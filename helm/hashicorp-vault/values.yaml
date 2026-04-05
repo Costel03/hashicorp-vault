@@ -1,26 +1,46 @@
-replicaCount: 2
+server:
+  image:
+    repository: hashicorp/vault
+    tag: "1.16.1"
+    pullPolicy: IfNotPresent
 
-image:
-  repository: hashicorp/vault
-  tag: "1.15.0"
-  pullPolicy: IfNotPresent
+  resources:
+    requests:
+      cpu: "250m"
+      memory: "512Mi"
+    limits:
+      cpu: "500m"
+      memory: "1Gi"
 
-resources:
-  requests:
-    cpu: "250m"
-    memory: "512Mi"
-  limits:
-    cpu: "500m"
-    memory: "1Gi"
+  ha:
+    enabled: false
 
-vault:
-  server:
-    ha:
-      enabled: false
-    service:
-      type: LoadBalancer
-      port: 8200
+  service:
+    type: LoadBalancer
+    port: 8200
+    annotations:
+      metallb.universe.tf/loadBalancerIPs: 192.168.56.22
 
-nodeSelector: {}
-tolerations: []
-affinity: {}
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    hosts:
+    - host: vault.local
+      paths:
+      - /
+    annotations:
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"
+
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+# Vault UI — accessible via LoadBalancer IP or Ingress
+ui:
+  enabled: true
+  serviceType: ClusterIP
+
+# Disable sidecar injector to save resources on a small cluster
+injector:
+  enabled: false
