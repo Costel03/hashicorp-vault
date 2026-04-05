@@ -28,9 +28,14 @@ server:
     - host: vault.local
       paths:
       - /
+    tls:
+    - secretName: vault-tls
+      hosts:
+      - vault.local
     annotations:
       nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
-      nginx.ingress.kubernetes.io/ssl-redirect: "false"
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
 
   nodeSelector: {}
   tolerations: []
